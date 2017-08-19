@@ -1,9 +1,8 @@
 package sample;
 
 import javafx.event.Event;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -17,6 +16,8 @@ public class Controller {
     public TextField textSearch;
     public TextField fileNameExtension;
     public Button startSearch;
+    public ScrollPane displayForTree;
+    public TabPane windowForTextOutput;
 
     public void openDirectoryChooser(Event event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -38,14 +39,22 @@ public class Controller {
         textSearch.setDisable(true);
         fileNameExtension.setDisable(true);
 
-        Directory d = new Directory(selectedDirectory, fileNameExtension.getText(),textSearch.getText());
-        d.start();
+        Directory d = new Directory(selectedDirectory, fileNameExtension.getText(),textSearch.getText(),windowForTextOutput);
+        d.fork();
         d.join();
-        d.subfolders.size();
-//        startSearch.setDisable(false);
-//        buttonForOpenDirectoryChooser.setDisable(false);
-//        textSearch.setDisable(false);
-//        fileNameExtension.setDisable(false);
+        displayForTree.setContent(d.getDisplayTheTree());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Поиск закончен");
+        alert.setHeaderText(null);
+        alert.setContentText("Поиск закончен найдено " + d.getNumberOfFilesFound() +" документов!");
+        alert.showAndWait();
 
+        startSearch.setDisable(false);
+        buttonForOpenDirectoryChooser.setDisable(false);
+        textSearch.setDisable(false);
+        fileNameExtension.setDisable(false);
     }
+
+
+
 }
