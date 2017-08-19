@@ -20,7 +20,9 @@ public class Main extends Application {
         temp = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("searches_for_specific_text_in_the_logs");
-        primaryStage.setScene(new Scene(root, 600, 500));
+
+
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 

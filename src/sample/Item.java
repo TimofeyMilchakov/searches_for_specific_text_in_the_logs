@@ -36,10 +36,8 @@ public class Item extends Button {
                 TextArea boxForText = new TextArea();
                 StringBuilder sb = new StringBuilder();
                 try {
-                    //Объект для чтения файла в буфер
                     BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
                     try {
-                        //В цикле построчно считываем файл
                         String s;
                         while ((s = in.readLine()) != null) {
                             sb.append(s);
