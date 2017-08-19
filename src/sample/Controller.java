@@ -16,6 +16,7 @@ public class Controller {
     public File selectedDirectory;
     public TextField textSearch;
     public TextField fileNameExtension;
+    public Button startSearch;
 
     public void openDirectoryChooser(Event event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -32,6 +33,19 @@ public class Controller {
             alert.showAndWait();
             return;
         }
+        startSearch.setDisable(true);
+        buttonForOpenDirectoryChooser.setDisable(true);
+        textSearch.setDisable(true);
+        fileNameExtension.setDisable(true);
+
+        Directory d = new Directory(selectedDirectory, fileNameExtension.getText(),textSearch.getText());
+        d.start();
+        d.join();
+        d.subfolders.size();
+//        startSearch.setDisable(false);
+//        buttonForOpenDirectoryChooser.setDisable(false);
+//        textSearch.setDisable(false);
+//        fileNameExtension.setDisable(false);
 
     }
 }
