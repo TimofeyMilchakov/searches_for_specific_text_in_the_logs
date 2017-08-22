@@ -2,6 +2,7 @@ package sample;
 
 import javafx.event.Event;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -18,6 +19,8 @@ public class Controller {
     public Button startSearch;
     public ScrollPane displayForTree;
     public TabPane windowForTextOutput;
+    public StackPane treePanel;
+
 
     public void openDirectoryChooser(Event event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -41,8 +44,17 @@ public class Controller {
 
         Directory d = new Directory(selectedDirectory, fileNameExtension.getText(),textSearch.getText(),windowForTextOutput);
         d.fork();
+        Alert alertInfo= new Alert(Alert.AlertType.INFORMATION);
+        alertInfo.setTitle("Поиск");
+        alertInfo.setHeaderText(null);
+        alertInfo.setContentText("Ожидайте завершения поиска!");
+        alertInfo.showAndWait();
         d.join();
-        displayForTree.setContent(d.getDisplayTheTree());
+        TreeView<String> temp = new TreeView<String>(d.getDisplayTheTree());
+        temp.setShowRoot(false);
+
+        treePanel.getChildren().add(temp);
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Поиск закончен");
         alert.setHeaderText(null);

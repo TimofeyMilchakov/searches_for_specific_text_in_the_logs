@@ -1,8 +1,15 @@
 package sample;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,31 +19,33 @@ import java.io.IOException;
 /**
  * Created by ttt on 19.08.2017.
  */
-public class Item extends Button {
+public class Item extends TreeItem<String> {
     public File file;
     public TabPane windowForTextOutput;
-    public Item(File file,TabPane scrollPane){
-        this.setText(file.getName());
-        this.file=file;
-        windowForTextOutput=scrollPane;
-        initializationButton();
+
+    public Item(File file, TabPane scrollPane) {
+        this.setValue(file.getName());
+        this.file = file;
+        windowForTextOutput = scrollPane;
+        initializationTreeItem();
     }
 
-    public String getName(){
+    public String getName() {
         return file.getName();
     }
 
 
-    public void initializationButton(){
-        this.setOnAction(new EventHandler<ActionEvent>() {
+    public void initializationTreeItem() {
+
+        this.expandedProperty().addListener(new InvalidationListener() {
             @Override
-            public void handle(ActionEvent event) {
+            public void invalidated(Observable observable) {
                 Tab tab = new Tab();
                 tab.setText(getName());
                 TextArea boxForText = new TextArea();
                 StringBuilder sb = new StringBuilder();
                 try {
-                    BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
+                    BufferedReader in = new BufferedReader(new FileReader(file.getAbsoluteFile()));
                     try {
                         String s;
                         while ((s = in.readLine()) != null) {
@@ -44,10 +53,9 @@ public class Item extends Button {
                             sb.append("\n");
                         }
                     } finally {
-                        //Также не забываем закрыть файл
                         in.close();
                     }
-                } catch(IOException e) {
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 boxForText.setText(sb.toString());
@@ -56,6 +64,4 @@ public class Item extends Button {
             }
         });
     }
-
-
 }
