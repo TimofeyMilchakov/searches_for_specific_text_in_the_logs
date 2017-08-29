@@ -25,11 +25,15 @@ public class Controller {
     public void openDirectoryChooser(Event event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         selectedDirectory = directoryChooser.showDialog(Main.temp);
-        folderPath.setText(selectedDirectory.toString());
+        try {
+            if (!selectedDirectory.toString().isEmpty())
+                folderPath.setText(selectedDirectory.toString());
+        } catch (Exception e) {
+        }
     }
 
     public void getStartSearch(Event event) throws Exception {
-        if(fileNameExtension.getText().isEmpty()||selectedDirectory==null){
+        if (fileNameExtension.getText().isEmpty() || folderPath.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка ввода данных");
             alert.setHeaderText(null);
@@ -42,9 +46,9 @@ public class Controller {
         textSearch.setDisable(true);
         fileNameExtension.setDisable(true);
 
-        Directory d = new Directory(selectedDirectory, fileNameExtension.getText(),textSearch.getText(),windowForTextOutput);
+        Directory d = new Directory(new File(folderPath.getText()), fileNameExtension.getText(), textSearch.getText(), windowForTextOutput);
         d.fork();
-        Alert alertInfo= new Alert(Alert.AlertType.INFORMATION);
+        Alert alertInfo = new Alert(Alert.AlertType.INFORMATION);
         alertInfo.setTitle("Поиск");
         alertInfo.setHeaderText(null);
         alertInfo.setContentText("Ожидайте завершения поиска!");
@@ -58,7 +62,7 @@ public class Controller {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Поиск закончен");
         alert.setHeaderText(null);
-        alert.setContentText("Поиск закончен найдено " + d.getNumberOfFilesFound() +" документов!");
+        alert.setContentText("Поиск закончен найдено " + d.getNumberOfFilesFound() + " документов!");
         alert.showAndWait();
 
         startSearch.setDisable(false);
@@ -66,7 +70,6 @@ public class Controller {
         textSearch.setDisable(false);
         fileNameExtension.setDisable(false);
     }
-
 
 
 }

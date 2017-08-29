@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.concurrent.RecursiveAction;
 
@@ -47,23 +48,26 @@ public class Directory extends RecursiveAction {
 
     private boolean checkTextFile(File file, String textSearch) {
         try {
-            BufferedReader in = new BufferedReader(new FileReader(file.getAbsoluteFile()));
-            String text;
-            while ((text = in.readLine()) != null) {
-                if (text.matches(".*" + textSearch + ".*"))
-                    return true;
-            }
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.US_ASCII));
+                String text;
+                while ((text = in.readLine()) != null) {
+                    if (text.matches("(.*)" + textSearch + "(.*)"))
+                        return true;
+                }
+                in.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
+            //e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            //e.printStackTrace();
             return false;
         }
-
+        return false;
     }
 
+    //C:\Windows\System32\Sysprep\Panther\IE\setupact.log
     @Override
     public void compute() {
 //        absolutePath = thisFile.getAbsolutePath();
@@ -95,12 +99,12 @@ public class Directory extends RecursiveAction {
         subfolders.removeAll(deleteDirectory);
     }
 
-    public TreeItem<String> getDisplayTheTree(){
+    public TreeItem<String> getDisplayTheTree() {
         TreeItem<String> nameDirectory = new TreeItem<>(getNameDirectory());
-        for(Directory directory:subfolders){
+        for (Directory directory : subfolders) {
             nameDirectory.getChildren().add(directory.getDisplayTheTree());
         }
-        for(Item item:subdocuments){
+        for (Item item : subdocuments) {
             nameDirectory.getChildren().add(item);
         }
         return nameDirectory;

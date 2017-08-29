@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -9,21 +10,80 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <Button fx:id="buttonForOpenDirectoryChooser" layoutX="412.0" layoutY="52.0" mnemonicParsing="false" onAction="#openDirectoryChooser" onMouseClicked="#openDirectoryChooser" text="выбор папки" />
-      <TextField fx:id="folderPath" depthTest="DISABLE" editable="false" layoutX="152.0" layoutY="52.0" pickOnBounds="false" prefHeight="25.0" prefWidth="260.0" />
-      <TextField fx:id="fileNameExtension" layoutX="152.0" layoutY="2.0" promptText="введите расширение" text="log" />
-      <TextField fx:id="textSearch" layoutX="152.0" layoutY="27.0" />
-      <Button fx:id="startSearch" layoutX="300.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#getStartSearch" prefHeight="50.0" prefWidth="112.0" text="Начать поиск" />
-      <VBox layoutY="2.0" prefHeight="79.0" prefWidth="152.0">
+      <VBox>
          <children>
-            <TextField editable="false" text="расширение файла" />
-            <TextField editable="false" text="текст поиска" />
-            <TextField editable="false" text="путь к папке" />
+            <HBox prefHeight="100.0" prefWidth="624.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="88.0" prefWidth="132.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="152.0" text="Путь к папке:">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="26.0" prefWidth="152.0" text="Расширение файла:">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label prefHeight="25.0" prefWidth="151.0" text="Текст поиска: ">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="95.0" prefWidth="220.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="folderPath" depthTest="DISABLE" editable="false" pickOnBounds="false" prefHeight="25.0" prefWidth="260.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="fileNameExtension" prefHeight="25.0" prefWidth="218.0" promptText="введите расширение" text="log">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="textSearch" prefHeight="25.0" prefWidth="181.0">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Button fx:id="buttonForOpenDirectoryChooser" mnemonicParsing="false" onAction="#openDirectoryChooser" onMouseClicked="#openDirectoryChooser" text="выбор папки">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="startSearch" mnemonicParsing="false" onMouseClicked="#getStartSearch" prefHeight="50.0" prefWidth="112.0" text="Начать поиск">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="5.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </VBox>
-      <ScrollPane fx:id="displayForTree" layoutY="77.0" maxHeight="1.7976931348623157E308" prefHeight="523.0" prefWidth="152.0" />
-      <TabPane fx:id="windowForTextOutput" layoutX="152.0" layoutY="77.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="523.0" prefWidth="650.0" tabClosingPolicy="ALL_TABS" />
+      <AnchorPane VBox.vgrow="ALWAYS">
+         <children>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="403.0" prefWidth="624.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <StackPane fx:id="treePanel" maxHeight="1.7976931348623157E308" prefHeight="510.0" prefWidth="114.0" HBox.hgrow="ALWAYS" />
+                  <TabPane fx:id="windowForTextOutput" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="501.0" prefWidth="486.0" tabClosingPolicy="ALL_TABS" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
    </children>
-</Pane>
+</VBox>
