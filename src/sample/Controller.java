@@ -1,7 +1,9 @@
 package sample;
 
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -56,7 +58,6 @@ public class Controller {
         d.join();
         TreeView<String> temp = new TreeView<String>(d.getDisplayTheTree());
         temp.setShowRoot(false);
-
         treePanel.getChildren().add(temp);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
